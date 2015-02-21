@@ -1,0 +1,27 @@
+{
+  "name": "backbone.parse-paginator",
+  "description": "",
+  "version": "1.0.0",
+  "authors": [
+    "Bendik R. Brenne <bendik@konstant.no>"
+  ],
+  "keywords": [
+    "backbone",
+    "pageable",
+    "paginator",
+    "parse"
+  ],
+  "license": "MIT",
+  "main": "backbone.parse-paginator.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone.paginator": "~2.0.2",
+    "backbone": "~1.1.2"
+  }
+}
