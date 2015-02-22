@@ -42,7 +42,28 @@
      * @override {Parse.Collection.fetch}
      */
     fetch: function(options) {
+      options || (options = {});
+
       var self = this;
+
+      // Hasty attempt to facilitate filtering - initially intended for Backgrid.Extension.ServerSideFilter.
+      // @todo
+      if (typeof(options.data) !== 'undefined') {
+        var subQuery, subQueries = [];
+        _.each(options.data, function(value, key) {
+          subQuery = new Parse.Query(self.model);
+          subQuery.contains(key, value);
+          subQuery._addCondition(key, "$options", 'i');
+          subQueries.push(subQuery);
+        });
+        self.query._where.$or = _.map(subQueries, function(q) {
+          return q.toJSON().where;
+        });
+
+      } else if (this.query._where.$or && options.reset) {
+        delete this.query._where.$or;
+      }
+
       return this.query.count().then(function(count) {
         self.state = self._checkState(_.extend({}, self.state, {
           totalRecords: count
